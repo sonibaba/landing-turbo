@@ -1,0 +1,12 @@
+{
+  "name": "Turbo Pizza",
+  "short_name": "Turbo Pizza",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "size": "any",
+      "type": "image/x-icon"
+    }
+  ]
+}
