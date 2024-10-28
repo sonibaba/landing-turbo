@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 const Carrito = () => {
   return (
-    <div className="bg-white origin-top-right right-1 mt-1 absolute rounded-lg shadow-md p-6 max-w-md mx-auto z-10  border-2 border-primary before:absolute before:content-[''] before:w-0 before:h-0 before:border-l-[14px] before:border-l-transparent before:border-r-[14px] before:border-r-transparent before:border-b-[14px] before:border-primary before:right-11 before:-top-4">
+    <div className="bg-white origin-top-right right-1 mt-1 absolute rounded-lg shadow-md p-6 max-w-md mx-auto z-10 border-2 border-primary before:absolute before:content-[''] before:w-0 before:h-0 before:border-l-[14px] before:border-l-transparent before:border-r-[14px] before:border-r-transparent before:border-b-[14px] before:border-primary before:right-11 before:-top-4">
       <div className="text-center">
         <div className="inline-block p-4 bg-primary/10 rounded-full mb-4">
           <FontAwesomeIcon icon={faShoppingCart} className="w-12 h-12 text-primary" />
