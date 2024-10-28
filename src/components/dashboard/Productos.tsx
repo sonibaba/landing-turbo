@@ -4,6 +4,7 @@ import { getProductos } from '@/lib/productos/actions'
 import { Categoria, IProducto, IProductos } from '@/model/productos'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 
 const Productos = ({ tab }: { tab: Categoria }) => {
   const [productos, setProductos] = useState<IProducto>({
@@ -13,7 +14,12 @@ const Productos = ({ tab }: { tab: Categoria }) => {
   })
 
   useEffect(() => {
-    getProductos().then(products => setProductos(products))
+    getProductos().then(({ error, data, message }) => {
+      if (error) {
+        toast.error(message)
+      }
+      setProductos(data)
+    })
   }, [])
 
   const agregarProducto = (producto: IProductos) => {
