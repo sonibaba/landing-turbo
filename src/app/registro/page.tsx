@@ -1,12 +1,12 @@
 'use client'
 
-import { registerClient } from '@/lib/registro/actions'
+import { registerClient } from '@/app/actions/login'
+import FormError from '@/components/shared/FormError'
 import { faCheckCircle, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
 import { useState } from 'react'
-import { toast } from 'sonner'
+import { useFormState } from 'react-dom'
 
 interface FormData {
   nombre: string
@@ -18,16 +18,9 @@ interface FormData {
   password: string
 }
 
-interface FormErrors {
-  nombre?: string
-  apellidoPaterno?: string
-  email?: string
-  telefono?: string
-  direccion?: string
-  password?: string
-}
-
 const Registro = () => {
+  const [state, action] = useFormState(registerClient, undefined)
+
   const [form, setForm] = useState<FormData>({
     nombre: '',
     apellidoPaterno: '',
@@ -38,70 +31,10 @@ const Registro = () => {
     password: '',
   })
 
-  const [errors, setErrors] = useState<FormErrors>({})
   const [showPassword, setShowPassword] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value })
-  }
-
-  const validateForm = (): boolean => {
-    let isValid = true
-    const newErrors: FormErrors = {}
-
-    if (form.nombre.trim().length < 2) {
-      newErrors.nombre = 'El nombre debe tener al menos 2 caracteres'
-      isValid = false
-    }
-
-    if (form.apellidoPaterno.trim().length < 2) {
-      newErrors.apellidoPaterno = 'El apellido paterno debe tener al menos 2 caracteres'
-      isValid = false
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(form.email)) {
-      newErrors.email = 'Por favor, introduce un email válido'
-      isValid = false
-    }
-
-    const phoneRegex = /^\d{10}$/
-    if (!phoneRegex.test(form.telefono)) {
-      newErrors.telefono = 'El número de teléfono debe tener 10 dígitos'
-      isValid = false
-    }
-
-    if (form.direccion.trim().length < 10) {
-      newErrors.direccion = 'Por favor, introduce una dirección válida'
-      isValid = false
-    }
-
-    if (form.password.length < 8) {
-      newErrors.password = 'La contraseña debe tener al menos 8 caracteres'
-      isValid = false
-    }
-
-    setErrors(newErrors)
-    return isValid
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (validateForm()) {
-      const { error, message } = await registerClient(form)
-      if (error) {
-        toast.error(message)
-        return
-      }
-      toast.success(message)
-      setTimeout(() => {
-        redirect('/login')
-      }, 100)
-      console.log('Formulario enviado', form)
-      // Aquí iría la lógica para enviar el formulario al servidor
-    } else {
-      console.log('Formulario inválido')
-    }
   }
 
   return (
@@ -112,7 +45,7 @@ const Registro = () => {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <form className="space-y-6" onSubmit={handleSubmit}>
+          <form className="space-y-6" action={action}>
             <div className="mx-4">
               <label htmlFor="nombre" className="block text-sm font-medium text-gray-700">
                 Nombre(s)
@@ -129,7 +62,9 @@ const Registro = () => {
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                 />
               </div>
-              {errors.nombre && <p className="mt-2 text-sm text-red-600">{errors.nombre}</p>}
+              {state?.errors?.nombre && (
+                <FormError errors={state?.errors?.nombre} title="El nombre debe de contener:" />
+              )}
             </div>
 
             <div className="mx-4">
@@ -148,8 +83,11 @@ const Registro = () => {
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                 />
               </div>
-              {errors.apellidoPaterno && (
-                <p className="mt-2 text-sm text-red-600">{errors.apellidoPaterno}</p>
+              {state?.errors?.apePaterno && (
+                <FormError
+                  errors={state?.errors?.apePaterno}
+                  title="El apellido paterno debe de contener:"
+                />
               )}
             </div>
 
@@ -168,6 +106,12 @@ const Registro = () => {
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                 />
               </div>
+              {state?.errors?.apePaterno && (
+                <FormError
+                  errors={state?.errors?.apePaterno}
+                  title="El apellido materno debe de contener"
+                />
+              )}
             </div>
 
             <div className="mx-4">
@@ -186,7 +130,12 @@ const Registro = () => {
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                 />
               </div>
-              {errors.email && <p className="mt-2 text-sm text-red-600">{errors.email}</p>}
+              {state?.errors?.email && (
+                <FormError
+                  errors={state?.errors?.email}
+                  title="El correo electronico debe de contener:"
+                />
+              )}
             </div>
 
             <div className="mx-4">
@@ -205,7 +154,12 @@ const Registro = () => {
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                 />
               </div>
-              {errors.telefono && <p className="mt-2 text-sm text-red-600">{errors.telefono}</p>}
+              {state?.errors?.telefono && (
+                <FormError
+                  errors={state?.errors?.telefono}
+                  title="Número de teléfono debe de contener"
+                />
+              )}
             </div>
 
             <div className="mx-4">
@@ -223,7 +177,12 @@ const Registro = () => {
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                 />
               </div>
-              {errors.direccion && <p className="mt-2 text-sm text-red-600">{errors.direccion}</p>}
+              {state?.errors?.direccion && (
+                <FormError
+                  errors={state?.errors?.direccion}
+                  title="La direccion debe de contener:"
+                />
+              )}
             </div>
 
             <div className="mx-4">
@@ -252,7 +211,12 @@ const Registro = () => {
                   />
                 </button>
               </div>
-              {errors.password && <p className="mt-2 text-sm text-red-600">{errors.password}</p>}
+              {state?.errors?.password && (
+                <FormError
+                  errors={state?.errors?.password}
+                  title="La contraseña debe de contener:"
+                />
+              )}
             </div>
 
             <div className="mx-4">
