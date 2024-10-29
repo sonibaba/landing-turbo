@@ -68,7 +68,7 @@ const Navbar = () => {
                           Iniciar sesión
                         </span>
                       </Link>
-                      <Link href="/register" passHref>
+                      <Link href="/registro" passHref>
                         <span
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
                           role="menuitem"

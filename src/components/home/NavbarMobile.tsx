@@ -80,8 +80,12 @@ const NavbarMobile = () => {
               <SheetDescription>Accede a tu cuenta o crea una nueva.</SheetDescription>
             </SheetHeader>
             <div className="flex flex-col gap-4 mt-6">
-              <Button variant="outline">Iniciar sesión</Button>
-              <Button>Crear cuenta</Button>
+              <Link href="/login" passHref>
+                <Button variant="outline">Iniciar sesión</Button>
+              </Link>
+              <Link href="/registro" passHref>
+                <Button>Crear cuenta</Button>
+              </Link>
             </div>
           </SheetContent>
         </Sheet>
