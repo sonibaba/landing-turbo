@@ -1,17 +1,17 @@
-import fetchResponse from '@/app/actions/fetch'
+'use server'
+
 import { IProducto, IProductos } from '@/model/productos'
+import { serverAction } from './cookie-handler'
 
 const getProductos = async (): Promise<{
-  error: boolean
-  message?: string
+  error?: string
   data: IProducto
 }> => {
-  const { error, data, message } = await fetchResponse('productos?estatus=true', 'GET')
+  const { data, success, error } = await serverAction('productos?estatus=true', 'GET')
 
-  if (error) {
+  if (!success) {
     return {
       error,
-      message,
       data: { combos: [], complementos: [], pizzas: [] },
     }
   }
