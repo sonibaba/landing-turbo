@@ -1,3 +1,5 @@
+'use server'
+
 import fetchResponse from '@/app/actions/fetch'
 import {
   SigninFormState,
@@ -6,6 +8,7 @@ import {
   SinginFormSchema,
 } from '@/lib/definitions'
 import { redirect } from 'next/navigation'
+import { setCookie } from './cookie-handler'
 
 const login = async (
   prevState: SignupFormState | undefined,
@@ -23,53 +26,48 @@ const login = async (
     }
   }
 
-  try {
-    const response = await fetchResponse('auth', 'POST', {
-      usuario: formData.get('email'),
-      flag: 'cliente',
-      password: formData.get('password'),
-    })
+  const response = await fetchResponse('auth', 'POST', {
+    usuario: formData.get('email'),
+    flag: 'cliente',
+    password: formData.get('password'),
+  })
 
-    if (!response) {
-      return {
-        errors: {
-          response: 'Error de conexión',
-        },
-        success: false,
-      }
-    }
+  console.log(response)
 
-    const { error, message, data } = response
-
-    if (error) {
-      return {
-        errors: {
-          response: message,
-        },
-        success: false,
-      }
-    }
-
-    const access = data?.access_token as string
-    if (!access) {
-      return {
-        errors: {
-          response: 'Token de acceso no encontrado',
-        },
-        success: false,
-      }
-    }
-
-    localStorage.setItem('token', access)
-    redirect('/dashboard')
-  } catch (error) {
+  if (!response) {
     return {
       errors: {
-        response: error instanceof Error ? error.message : 'Error inesperado',
+        response: 'Error de conexión',
       },
       success: false,
     }
   }
+
+  const { error, message, data } = response
+
+  if (error) {
+    return {
+      errors: {
+        response: message,
+      },
+      success: false,
+    }
+  }
+
+  const access = data?.access_token as string
+  console.log(access)
+  if (!access) {
+    return {
+      errors: {
+        response: 'Token de acceso no encontrado',
+      },
+      success: false,
+    }
+  }
+
+  await setCookie(access)
+
+  redirect('/dashboard')
 }
 
 const registerClient = async (
