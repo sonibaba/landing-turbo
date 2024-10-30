@@ -5,8 +5,7 @@ import FormError from '@/components/shared/FormError'
 import { faCheckCircle, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
-import { useState } from 'react'
-import { useFormState } from 'react-dom'
+import { useActionState, useState } from 'react'
 
 interface FormData {
   nombre: string
@@ -19,7 +18,7 @@ interface FormData {
 }
 
 const Registro = () => {
-  const [state, action] = useFormState(registerClient, undefined)
+  const [state, action, isPending] = useActionState(registerClient, undefined)
 
   const [form, setForm] = useState<FormData>({
     nombre: '',
@@ -221,6 +220,7 @@ const Registro = () => {
 
             <div className="mx-4">
               <button
+                disabled={isPending}
                 type="submit"
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
               >
