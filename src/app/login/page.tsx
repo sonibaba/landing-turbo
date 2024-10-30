@@ -2,84 +2,83 @@
 
 import { login } from '@/app/actions/login'
 import FormError from '@/components/shared/FormError'
+import Spinner from '@/components/shared/loading'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
-import { useState } from 'react'
-import { useFormState, useFormStatus } from 'react-dom'
-
+import { useActionState, useState } from 'react'
 function Login() {
   const [showPassword, setShowPassword] = useState(false)
 
-  const { pending } = useFormStatus()
-
-  const [state, action] = useFormState(login, undefined)
+  const [state, action, isPending] = useActionState(login, undefined)
 
   return (
-    <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      {state?.errors?.response && <FormError message={state.errors.response} />}
+    <>
+      {isPending && <Spinner size="lg" className="text-purple-600" />}
+      <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+        {state?.errors?.response && <FormError message={state.errors.response} />}
 
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Iniciar sesión en tu cuenta
-        </h2>
-      </div>
+        <div className="sm:mx-auto sm:w-full sm:max-w-md">
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            Iniciar sesión en tu cuenta
+          </h2>
+        </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 sm:rounded-lg sm:px-10">
-          <form className="space-y-6" action={action}>
-            <div className="mx-4">
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                Correo electrónico
-              </label>
-              <div className="mt-1">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
-                />
-              </div>
-            </div>
-            {state?.errors?.usuario && (
-              <FormError
-                errors={state.errors.usuario}
-                title="El correo electronico debe de contener:"
-              />
-            )}
-
-            <div className="mx-4">
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                Contraseña
-              </label>
-              <div className="mt-1 relative">
-                <input
-                  id="password"
-                  name="password"
-                  type={showPassword ? 'text' : 'password'}
-                  autoComplete="current-password"
-                  required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
-                >
-                  <FontAwesomeIcon
-                    icon={showPassword ? faEyeSlash : faEye}
-                    className="h-5 w-5 text-gray-400"
+        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+          <div className="bg-white py-8 px-4 sm:rounded-lg sm:px-10">
+            <form className="space-y-6" action={action}>
+              <div className="mx-4">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                  Correo electrónico
+                </label>
+                <div className="mt-1">
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    required
+                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                   />
-                </button>
+                </div>
               </div>
-              {state?.errors?.password && (
-                <FormError errors={state.errors.password} title="La contraseña debe de tener:" />
+              {state?.errors?.usuario && (
+                <FormError
+                  errors={state.errors.usuario}
+                  title="El correo electronico debe de contener:"
+                />
               )}
-            </div>
-            <div className="mx-4 flex items-center justify-between">
-              {/* <div className="flex items-center">
+
+              <div className="mx-4">
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                  Contraseña
+                </label>
+                <div className="mt-1 relative">
+                  <input
+                    id="password"
+                    name="password"
+                    type={showPassword ? 'text' : 'password'}
+                    autoComplete="current-password"
+                    required
+                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+                  >
+                    <FontAwesomeIcon
+                      icon={showPassword ? faEyeSlash : faEye}
+                      className="h-5 w-5 text-gray-400"
+                    />
+                  </button>
+                </div>
+                {state?.errors?.password && (
+                  <FormError errors={state.errors.password} title="La contraseña debe de tener:" />
+                )}
+              </div>
+              <div className="mx-4 flex items-center justify-between">
+                {/* <div className="flex items-center">
                 <input
                   id="remember-me"
                   name="remember-me"
@@ -91,48 +90,48 @@ function Login() {
                 </label>
               </div> */}
 
-              <div className="text-sm">
-                <Link
-                  href="/reset-password"
-                  className="font-medium text-primary hover:text-primary-dark"
+                <div className="text-sm">
+                  <Link
+                    href="/reset-password"
+                    className="font-medium text-primary hover:text-primary-dark"
+                  >
+                    ¿Olvidaste tu contraseña?
+                  </Link>
+                </div>
+              </div>
+
+              <div className="mx-4">
+                <button
+                  type="submit"
+                  disabled={isPending}
+                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
                 >
-                  ¿Olvidaste tu contraseña?
+                  Iniciar sesión
+                </button>
+              </div>
+            </form>
+
+            <div className="mt-6">
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-300"></div>
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-2 bg-white text-gray-500">O</span>
+                </div>
+              </div>
+
+              <div className="mt-6">
+                <Link
+                  href="/registro"
+                  className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 cursor-pointer transition duration-150 ease-in-out"
+                >
+                  Crear cuenta
                 </Link>
               </div>
             </div>
 
-            <div className="mx-4">
-              <button
-                type="submit"
-                disabled={pending}
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-              >
-                Iniciar sesión
-              </button>
-            </div>
-          </form>
-
-          <div className="mt-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">O</span>
-              </div>
-            </div>
-
-            <div className="mt-6">
-              <Link
-                href="/registro"
-                className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 cursor-pointer transition duration-150 ease-in-out"
-              >
-                Crear cuenta
-              </Link>
-            </div>
-          </div>
-
-          {/* <div className="mt-6 mx-4">
+            {/* <div className="mt-6 mx-4">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-300"></div>
@@ -203,9 +202,10 @@ function Login() {
               </div>
             </div>
           </div> */}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
