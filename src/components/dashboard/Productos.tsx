@@ -1,6 +1,6 @@
 'use client'
 
-import { getProductos } from '@/lib/productos/actions'
+import { getProductos } from '@/app/actions/productos'
 import { Categoria, IProducto, IProductos } from '@/model/productos'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
@@ -14,9 +14,9 @@ const Productos = ({ tab }: { tab: Categoria }) => {
   })
 
   useEffect(() => {
-    getProductos().then(({ error, data, message }) => {
+    getProductos().then(({ error, data }) => {
       if (error) {
-        toast.error(message)
+        toast.error(error)
       }
       setProductos(data)
     })
@@ -34,7 +34,7 @@ const Productos = ({ tab }: { tab: Categoria }) => {
             <Image
               src={producto.imagenes.at(0) ?? 'logo.svg'}
               width={298}
-              height={192}
+              height={48}
               className="w-full h-48 object-cover"
               alt={producto.nombre}
             />
