@@ -1,7 +1,6 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  output: 'export',
   env: {
     CLOUDINARY_CLOUD_NAME: 'dt5bkke6v',
     CLOUDINARY_URL: 'cloudinary://API_KEY:API_SECRET@dt5bkke6v',
@@ -12,7 +11,6 @@ const nextConfig: NextConfig = {
   //   defaultLocale: 'es-MX',
   // },
   images: {
-    unoptimized: true,
     localPatterns: [
       {
         pathname: './src/assets/*',
