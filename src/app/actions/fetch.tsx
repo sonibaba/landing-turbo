@@ -1,3 +1,7 @@
+'use server'
+
+import { cookies } from 'next/headers'
+
 interface ArgsDynamic {
   [key: string]: unknown
 }
@@ -7,11 +11,15 @@ const fetchResponse = async (
   method: string,
   args?: ArgsDynamic
 ): Promise<{ error: boolean; message?: string; data?: ArgsDynamic }> => {
+  const cookieStore = await cookies()
+
+  console.log({ args })
+
   const response = await fetch(`https://sandbox3.huastecanetwork.com/api/${url}`, {
     method,
     headers: {
       'Content-Type': 'application/json',
-      authorization: `Bearer ${localStorage.getItem('token')}`,
+      authorization: `Bearer ${cookieStore.get('token')}`,
     },
     body: JSON.stringify(args),
   })
