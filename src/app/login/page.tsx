@@ -94,7 +94,7 @@ function Login() {
                 <div className="text-sm">
                   <Link
                     href="/reset-password"
-                    className="font-medium text-primary hover:text-primary-dark"
+                    className="font-medium text-[#D14817] hover:text-primary-dark"
                   >
                     ¿Olvidaste tu contraseña?
                   </Link>
