@@ -83,7 +83,11 @@ const Navbar = () => {
             </div>
             <div className="flex items-center space-x-4" ref={carDropDownRef}>
               <div className="">
-                <button onClick={() => setOpenBag(!openBag)}>
+                <button
+                  onClick={() => setOpenBag(!openBag)}
+                  aria-label="Carrito vacio"
+                  title="Carrito vacio"
+                >
                   <FontAwesomeIcon
                     icon={faBagShopping}
                     className="text-primary px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out flex items-center cursor-pointer h-6 w-6"
