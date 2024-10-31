@@ -20,6 +20,7 @@ export async function middleware(request: NextRequest) {
       // Aquí deberías verificar el token
       // Por ejemplo, podrías hacer una petición a tu API para validar el token
       const response = await fetch('https://sandbox3.huastecanetwork.com/api/auth', {
+        method: 'GET',
         headers: {
           Authorization: `Bearer ${token}`,
         },
