@@ -16,10 +16,14 @@ const getProductos = async (): Promise<{
     }
   }
 
-  const obj = Object.groupBy(
-    data as unknown as Array<IProductos>,
-    (producto: IProductos) => producto.categoria
-  )
+  const obj = (data as unknown as Array<IProductos>).reduce((acc, producto) => {
+    if (acc[producto.categoria]) {
+      acc[producto.categoria].push(producto)
+    } else {
+      acc[producto.categoria] = [producto]
+    }
+    return acc
+  }, {} as IProducto)
 
   return {
     error,
