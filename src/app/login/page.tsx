@@ -105,7 +105,7 @@ function Login() {
                 <button
                   type="submit"
                   disabled={isPending}
-                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#D14817] hover:bg-[#B13913] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#D14817]"
                 >
                   Iniciar sesión
                 </button>
