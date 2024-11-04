@@ -2,6 +2,7 @@
 
 import { getProductos } from '@/app/actions/productos'
 import { Categoria, IProducto } from '@/model/productos'
+import logo from '@public/logo.svg'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
@@ -33,7 +34,7 @@ const Productos = ({ tab }: { tab: Categoria }) => {
             <div className="rounded-lg shadow-md overflow-hidden" key={producto.id}>
               <div className="relative h-40 sm:h-48">
                 <Image
-                  src={producto.imagenes.at(0) ?? '/logo.svg'}
+                  src={producto.imagenes.at(0) ?? logo}
                   alt={producto.nombre}
                   width={298}
                   height={48}

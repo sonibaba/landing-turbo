@@ -2,6 +2,7 @@
 
 import { faBagShopping, faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import logo from '@public/logo.svg'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
@@ -35,7 +36,7 @@ const Navbar = () => {
         <div className="flex justify-between h-16">
           <div className="flex-shrink-0 flex items-center">
             <Link href="/" className="flex items-center">
-              <Image src="logo.svg" alt="Turbo Pizza" width={60} height={36} />
+              <Image src={logo} alt="Turbo Pizza" width={60} height={36} />
             </Link>
           </div>
           <div className="flex">

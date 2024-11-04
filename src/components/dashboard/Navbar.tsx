@@ -4,6 +4,7 @@ import useStore from '@/hooks/useStore'
 import useCartStore from '@/store/useCartStore'
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import logo from '@public/logo.svg'
 import { LogOut, ShoppingCart, User } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -26,13 +27,7 @@ const Navbar = () => {
         <div className="flex justify-between h-16">
           <div className="flex-shrink-0 flex items-center">
             <Link href="/dashboard" className="flex items-center">
-              <Image
-                className="h-8 w-auto"
-                src="logo.svg"
-                alt="Turbo pizza"
-                width={60}
-                height={32}
-              />
+              <Image className="h-8 w-auto" src={logo} alt="Turbo pizza" width={60} height={32} />
             </Link>
           </div>
           <div className="flex-shrink-0 flex items-center">
