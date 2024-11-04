@@ -22,6 +22,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@auth/core@npm:0.37.2":
+  version: 0.37.2
+  resolution: "@auth/core@npm:0.37.2"
+  dependencies:
+    "@panva/hkdf": "npm:^1.2.1"
+    "@types/cookie": "npm:0.6.0"
+    cookie: "npm:0.7.1"
+    jose: "npm:^5.9.3"
+    oauth4webapi: "npm:^3.0.0"
+    preact: "npm:10.11.3"
+    preact-render-to-string: "npm:5.2.3"
+  peerDependencies:
+    "@simplewebauthn/browser": ^9.0.1
+    "@simplewebauthn/server": ^9.0.2
+    nodemailer: ^6.8.0
+  peerDependenciesMeta:
+    "@simplewebauthn/browser":
+      optional: true
+    "@simplewebauthn/server":
+      optional: true
+    nodemailer:
+      optional: true
+  checksum: 10c0/ff2c6c9bd5fca34c2b18b947e0d76906408b92480a441f5e0ccf51112cc80db9ef926d49c6cfd1500c4dac22eeee9179046826f2a3c628f36aeaab7f4f86d215
+  languageName: node
+  linkType: hard
+
 "@babel/code-frame@npm:^7.0.0, @babel/code-frame@npm:^7.25.9, @babel/code-frame@npm:^7.26.0":
   version: 7.26.0
   resolution: "@babel/code-frame@npm:7.26.0"
@@ -1776,6 +1802,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@panva/hkdf@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@panva/hkdf@npm:1.2.1"
+  checksum: 10c0/1fabdec9bd2c19b8e88a3fa6fd0c25e25823c5000d9efdf4b6dfe32e9f370f8b9603cf776d120d160bec15fba17e079974cc34f0f52cebb24602cd832dfde19c
+  languageName: node
+  linkType: hard
+
 "@pkgjs/parseargs@npm:^0.11.0":
   version: 0.11.0
   resolution: "@pkgjs/parseargs@npm:0.11.0"
@@ -2553,6 +2586,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/cookie@npm:0.6.0":
+  version: 0.6.0
+  resolution: "@types/cookie@npm:0.6.0"
+  checksum: 10c0/5b326bd0188120fb32c0be086b141b1481fec9941b76ad537f9110e10d61ee2636beac145463319c71e4be67a17e85b81ca9e13ceb6e3bb63b93d16824d6c149
+  languageName: node
+  linkType: hard
+
 "@types/json5@npm:^0.0.29":
   version: 0.0.29
   resolution: "@types/json5@npm:0.0.29"
@@ -3296,6 +3336,13 @@ __metadata:
   version: 2.0.0
   resolution: "convert-source-map@npm:2.0.0"
   checksum: 10c0/8f2f7a27a1a011cc6cc88cc4da2d7d0cfa5ee0369508baae3d98c260bb3ac520691464e5bbe4ae7cdf09860c1d69ecc6f70c63c6e7c7f7e3f18ec08484dc7d9b
+  languageName: node
+  linkType: hard
+
+"cookie@npm:0.7.1":
+  version: 0.7.1
+  resolution: "cookie@npm:0.7.1"
+  checksum: 10c0/5de60c67a410e7c8dc8a46a4b72eb0fe925871d057c9a5d2c0e8145c4270a4f81076de83410c4d397179744b478e33cd80ccbcc457abf40a9409ad27dcd21dde
   languageName: node
   linkType: hard
 
@@ -4921,6 +4968,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jose@npm:^5.9.3":
+  version: 5.9.6
+  resolution: "jose@npm:5.9.6"
+  checksum: 10c0/d6bcd8c7d655b5cda8e182952a76f0c093347f5476d74795405bb91563f7ab676f61540310dd4b1531c60d685335ceb600571a409551d2cbd2ab3e9f9fbf1e4d
+  languageName: node
+  linkType: hard
+
 "js-tokens@npm:^3.0.0 || ^4.0.0, js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -5023,47 +5077,6 @@ __metadata:
   checksum: 10c0/aa52f3c5e18e16bb6324876bb8b59dd02acf782a4b789c7b2ae21107fab95fab3890ed448d4f8dba80ce05391eeac4bfabb4f02a20221342982f806fa2cf271e
   languageName: node
   linkType: hard
-
-"landing-nextjs@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "landing-nextjs@workspace:."
-  dependencies:
-    "@fortawesome/fontawesome-svg-core": "npm:^6.6.0"
-    "@fortawesome/free-brands-svg-icons": "npm:^6.6.0"
-    "@fortawesome/free-solid-svg-icons": "npm:^6.6.0"
-    "@fortawesome/react-fontawesome": "npm:^0.2.2"
-    "@radix-ui/react-alert-dialog": "npm:^1.1.2"
-    "@radix-ui/react-dialog": "npm:^1.1.2"
-    "@radix-ui/react-dropdown-menu": "npm:^2.1.2"
-    "@radix-ui/react-icons": "npm:^1.3.0"
-    "@radix-ui/react-label": "npm:^2.1.0"
-    "@radix-ui/react-slot": "npm:^1.1.0"
-    "@radix-ui/react-switch": "npm:^1.1.1"
-    "@svgr/webpack": "npm:^8.1.0"
-    "@types/node": "npm:^20"
-    "@types/react": "npm:^18"
-    "@types/react-dom": "npm:^18"
-    "@types/ua-parser-js": "npm:^0.7.39"
-    class-variance-authority: "npm:^0.7.0"
-    clsx: "npm:^2.1.1"
-    eslint: "npm:^8"
-    eslint-config-next: "npm:15.0.1"
-    libphonenumber-js: "npm:^1.11.12"
-    lucide-react: "npm:^0.454.0"
-    next: "npm:15.0.1"
-    postcss: "npm:^8"
-    react: "npm:19.0.0-rc-69d4b800-20241021"
-    react-dom: "npm:19.0.0-rc-69d4b800-20241021"
-    sonner: "npm:^1.5.0"
-    tailwind-merge: "npm:^2.5.4"
-    tailwindcss: "npm:^3.4.1"
-    tailwindcss-animate: "npm:^1.0.7"
-    typescript: "npm:^5"
-    ua-parser-js: "npm:^1.0.39"
-    zod: "npm:^3.23.8"
-    zustand: "npm:^5.0.1"
-  languageName: unknown
-  linkType: soft
 
 "language-subtag-registry@npm:^0.3.20":
   version: 0.3.23
@@ -5397,6 +5410,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"next-auth@npm:^5.0.0-beta.25":
+  version: 5.0.0-beta.25
+  resolution: "next-auth@npm:5.0.0-beta.25"
+  dependencies:
+    "@auth/core": "npm:0.37.2"
+  peerDependencies:
+    "@simplewebauthn/browser": ^9.0.1
+    "@simplewebauthn/server": ^9.0.2
+    next: ^14.0.0-0 || ^15.0.0-0
+    nodemailer: ^6.6.5
+    react: ^18.2.0 || ^19.0.0-0
+  peerDependenciesMeta:
+    "@simplewebauthn/browser":
+      optional: true
+    "@simplewebauthn/server":
+      optional: true
+    nodemailer:
+      optional: true
+  checksum: 10c0/d9bbaae7abad133c30eb1df41ef151e959998c2db5152fabd3389d4e13b5dd9226eb4b6cbba400250ae4713aeca2008fa9bcc29233b14a26777de4c3dc4d6a39
+  languageName: node
+  linkType: hard
+
 "next@npm:15.0.1":
   version: 15.0.1
   resolution: "next@npm:15.0.1"
@@ -5519,6 +5554,13 @@ __metadata:
   dependencies:
     boolbase: "npm:^1.0.0"
   checksum: 10c0/5fee7ff309727763689cfad844d979aedd2204a817fbaaf0e1603794a7c20db28548d7b024692f953557df6ce4a0ee4ae46cd8ebd9b36cfb300b9226b567c479
+  languageName: node
+  linkType: hard
+
+"oauth4webapi@npm:^3.0.0":
+  version: 3.1.2
+  resolution: "oauth4webapi@npm:3.1.2"
+  checksum: 10c0/9661df38aa1ad3c71d63831538277d877606c272dd76f5ba7c263d826d48521d62e678fe8dde5cbe6d1673457a1afbf3fbf44aa1adea480d25e37fd73ce01907
   languageName: node
   linkType: hard
 
@@ -5857,10 +5899,35 @@ __metadata:
   languageName: node
   linkType: hard
 
+"preact-render-to-string@npm:5.2.3":
+  version: 5.2.3
+  resolution: "preact-render-to-string@npm:5.2.3"
+  dependencies:
+    pretty-format: "npm:^3.8.0"
+  peerDependencies:
+    preact: ">=10"
+  checksum: 10c0/c7695dd034a2dc50e3fd44621fd55e2d41854ab0abbcbc833a81feb3593a22a011596049de5a2486f71483323467a827adc7d6077cbbb1d154c0089fd8ab4cd7
+  languageName: node
+  linkType: hard
+
+"preact@npm:10.11.3":
+  version: 10.11.3
+  resolution: "preact@npm:10.11.3"
+  checksum: 10c0/44f342de226a89b53a7156fad0d4192bfc8233a5cc3eb46162f53d3c0c1c2956222d997927c7dff20f52c3592f112cefec5adac64f0477cbd8370fb39126ef7b
+  languageName: node
+  linkType: hard
+
 "prelude-ls@npm:^1.2.1":
   version: 1.2.1
   resolution: "prelude-ls@npm:1.2.1"
   checksum: 10c0/b00d617431e7886c520a6f498a2e14c75ec58f6d93ba48c3b639cf241b54232d90daa05d83a9e9b9fef6baa63cb7e1e4602c2372fea5bc169668401eb127d0cd
+  languageName: node
+  linkType: hard
+
+"pretty-format@npm:^3.8.0":
+  version: 3.8.0
+  resolution: "pretty-format@npm:3.8.0"
+  checksum: 10c0/69f12937bfb7b2a537a7463b9f875a16322401f1e44d7702d643faa0d21991126c24c093217ef6da403b54c15942a834174fa1c016b72e2cb9edaae6bb3729b6
   languageName: node
   linkType: hard
 
@@ -6806,6 +6873,49 @@ __metadata:
   languageName: node
   linkType: hard
 
+"turbo-pizza@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "turbo-pizza@workspace:."
+  dependencies:
+    "@fortawesome/fontawesome-svg-core": "npm:^6.6.0"
+    "@fortawesome/free-brands-svg-icons": "npm:^6.6.0"
+    "@fortawesome/free-solid-svg-icons": "npm:^6.6.0"
+    "@fortawesome/react-fontawesome": "npm:^0.2.2"
+    "@radix-ui/react-alert-dialog": "npm:^1.1.2"
+    "@radix-ui/react-dialog": "npm:^1.1.2"
+    "@radix-ui/react-dropdown-menu": "npm:^2.1.2"
+    "@radix-ui/react-icons": "npm:^1.3.0"
+    "@radix-ui/react-label": "npm:^2.1.0"
+    "@radix-ui/react-slot": "npm:^1.1.0"
+    "@radix-ui/react-switch": "npm:^1.1.1"
+    "@svgr/webpack": "npm:^8.1.0"
+    "@types/node": "npm:^20"
+    "@types/react": "npm:^18"
+    "@types/react-dom": "npm:^18"
+    "@types/ua-parser-js": "npm:^0.7.39"
+    class-variance-authority: "npm:^0.7.0"
+    clsx: "npm:^2.1.1"
+    eslint: "npm:^8"
+    eslint-config-next: "npm:15.0.1"
+    libphonenumber-js: "npm:^1.11.12"
+    lucide-react: "npm:^0.454.0"
+    next: "npm:15.0.1"
+    next-auth: "npm:^5.0.0-beta.25"
+    postcss: "npm:^8"
+    react: "npm:19.0.0-rc-69d4b800-20241021"
+    react-dom: "npm:19.0.0-rc-69d4b800-20241021"
+    sonner: "npm:^1.5.0"
+    tailwind-merge: "npm:^2.5.4"
+    tailwindcss: "npm:^3.4.1"
+    tailwindcss-animate: "npm:^1.0.7"
+    typescript: "npm:^5"
+    ua-parser-js: "npm:^1.0.39"
+    zod: "npm:^3.23.8"
+    zustand: "npm:^5.0.1"
+    zustand-computed: "npm:^2.0.0"
+  languageName: unknown
+  linkType: soft
+
 "type-check@npm:^0.4.0, type-check@npm:~0.4.0":
   version: 0.4.0
   resolution: "type-check@npm:0.4.0"
@@ -7182,6 +7292,16 @@ __metadata:
   version: 3.23.8
   resolution: "zod@npm:3.23.8"
   checksum: 10c0/8f14c87d6b1b53c944c25ce7a28616896319d95bc46a9660fe441adc0ed0a81253b02b5abdaeffedbeb23bdd25a0bf1c29d2c12dd919aef6447652dd295e3e69
+  languageName: node
+  linkType: hard
+
+"zustand-computed@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "zustand-computed@npm:2.0.0"
+  peerDependencies:
+    react: ^18.2.0
+    zustand: ^4.3.8
+  checksum: 10c0/8cfb1b6318bb084d0dbcdb8b568652e73e9b608268f67dcff3f478d978b90c95c59c683b3a977353b68b47d23429d7166c9031508216d0044af3882cecafb209
   languageName: node
   linkType: hard
 

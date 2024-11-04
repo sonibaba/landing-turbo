@@ -1,5 +1,5 @@
 {
-  "name": "landing-nextjs",
+  "name": "turbo-pizza",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -26,6 +26,7 @@
     "libphonenumber-js": "^1.11.12",
     "lucide-react": "^0.454.0",
     "next": "15.0.1",
+    "next-auth": "^5.0.0-beta.25",
     "react": "19.0.0-rc-69d4b800-20241021",
     "react-dom": "19.0.0-rc-69d4b800-20241021",
     "sonner": "^1.5.0",
@@ -33,7 +34,8 @@
     "tailwindcss-animate": "^1.0.7",
     "ua-parser-js": "^1.0.39",
     "zod": "^3.23.8",
-    "zustand": "^5.0.1"
+    "zustand": "^5.0.1",
+    "zustand-computed": "^2.0.0"
   },
   "devDependencies": {
     "@types/node": "^20",
