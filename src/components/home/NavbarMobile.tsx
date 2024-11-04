@@ -2,6 +2,7 @@
 
 import { faBagShopping, faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import logo from '@public/logo.svg'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
@@ -58,7 +59,7 @@ const NavbarMobile = () => {
           </SheetTrigger>
           <div className="text-xl font-bold">
             <Link href="/" className="flex items-center">
-              <Image src="logo.svg" alt="Turbo Pizza" width={50} height={36} />
+              <Image src={logo} alt="Turbo Pizza" width={50} height={36} />
             </Link>
           </div>
           <div className="flex items-center space-x-4 max-w-screen" ref={carDropDownRef}>
