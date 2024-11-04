@@ -1,11 +1,13 @@
 {
   "hosting": {
     "site": "next-landing-929bc",
-    "public": "out",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ]
+    "source": ".",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "frameworksBackend": {
+      "region": "us-west1"
+    },
+    "functions": {
+      "predeploy": ["npm --prefix functions run lint", "npm --prefix functions run build"]
+    }
   }
 }
