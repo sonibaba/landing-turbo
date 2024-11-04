@@ -7,6 +7,7 @@ export type IProductos = {
   categoria: Categoria
   imagenes: string[]
   orilla?: boolean
+  descripcion?: string
 }
 
 export enum Categoria {
