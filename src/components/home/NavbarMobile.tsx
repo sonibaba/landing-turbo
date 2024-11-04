@@ -41,27 +41,25 @@ const NavbarMobile = () => {
     <div className="bg-background">
       <nav className="flex items-center justify-between p-4">
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <div className="flex">
-            <SheetTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={toggleDrawer}
-                className="text-primary mr-4"
-              >
-                {isOpen ? (
-                  <FontAwesomeIcon icon={faTimes} className="h-6 w-6" />
-                ) : (
-                  <FontAwesomeIcon icon={faBars} className="h-6 w-6" />
-                )}
-                <span className="sr-only">Toggle menu</span>
-              </Button>
-            </SheetTrigger>
-            <div className="text-xl font-bold">
-              <Link href="/" className="flex items-center">
-                <Image src="logo.svg" alt="Turbo Pizza" width={50} height={36} />
-              </Link>
-            </div>
+          <SheetTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleDrawer}
+              className="text-primary mr-4 hover:text-secondary"
+            >
+              {isOpen ? (
+                <FontAwesomeIcon icon={faTimes} className="h-8 w-8" />
+              ) : (
+                <FontAwesomeIcon icon={faBars} className="h-8 w-8" />
+              )}
+              <span className="sr-only">Toggle menu</span>
+            </Button>
+          </SheetTrigger>
+          <div className="text-xl font-bold">
+            <Link href="/" className="flex items-center">
+              <Image src="logo.svg" alt="Turbo Pizza" width={50} height={36} />
+            </Link>
           </div>
           <div className="flex items-center space-x-4 max-w-screen" ref={carDropDownRef}>
             <div className="relative ">
