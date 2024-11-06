@@ -43,8 +43,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             email: cliente?.email ?? '',
             id: cliente?.id ?? '',
             name: cliente?.nombre ?? '',
-            success: true,
-            error: null,
           }
 
           return user
@@ -123,6 +121,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             // Return `null` to indicate that the credentials are invalid
             return null
           }
+          return null
         }
       },
     }),
