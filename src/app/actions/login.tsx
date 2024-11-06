@@ -8,6 +8,7 @@ import {
   SinginFormSchema,
 } from '@/lib/definitions'
 import { prisma } from '@/prisma'
+import { Prisma } from '@prisma/client'
 import { genSaltSync, hashSync } from 'bcryptjs'
 import { redirect } from 'next/navigation'
 import { setCookie } from './cookie-handler'
@@ -118,9 +119,11 @@ const registerClient = async (state: SigninFormState | undefined, form: FormData
     console.log(usuario)
     return { success: true, message: 'Usuario registrado exitosamente.' }
   } catch (error) {
-    console.log(error)
-    if (error.code === 'P2002' && error.meta?.target?.includes('email')) {
-      return { message: 'Este correo electrónico ya está registrado.' }
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      console.log(error)
+      if (error['code'] === 'P2002') {
+        return { message: 'Este correo electrónico ya está registrado.' }
+      }
     }
     return { message: 'Ocurrió un error al registrar el usuario.' }
   }
