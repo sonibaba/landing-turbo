@@ -1,4 +1,5 @@
 import Navbar from '@/components/dashboard/Navbar'
+import { SessionProvider } from 'next-auth/react'
 
 const RootLayout = ({
   children,
@@ -6,10 +7,12 @@ const RootLayout = ({
   children: React.ReactNode
 }>) => {
   return (
-    <main className="min-h-screen bg-background">
-      <Navbar />
-      {children}
-    </main>
+    <SessionProvider>
+      <main className="min-h-screen bg-background">
+        <Navbar />
+        {children}
+      </main>
+    </SessionProvider>
   )
 }
 
