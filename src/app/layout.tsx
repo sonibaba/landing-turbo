@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
 
+import { Toaster } from '@/components/ui/toaster'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
-import { Toaster } from 'sonner'
 config.autoAddCss = false
 
 const geistSans = localFont({
@@ -32,7 +32,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
-        <Toaster position="top-center" richColors />
+        <Toaster />
+        {/* <Toaster position="top-center" richColors /> */}
       </body>
     </html>
   )
