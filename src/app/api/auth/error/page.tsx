@@ -69,7 +69,7 @@ function ErrorContent() {
         </p>
       </CardContent>
       <CardFooter className="flex justify-center">
-        <Button onClick={handleBackToHome} className="flex items-center">
+        <Button onClick={handleBackToHome} className="flex items-center text-white">
           <ArrowLeft className="mr-2 h-4 w-4" /> Volver al Inicio
         </Button>
       </CardFooter>
