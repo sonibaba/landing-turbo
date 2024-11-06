@@ -29,26 +29,32 @@ const phoneValidateZod = z.string().transform((value, ctx) => {
   return parsePhoneNumber(value, 'MX')
 })
 
-export const SinginFormSchema = z.object({
-  nombre: z.string().trim(),
-  apePaterno: z.string().trim(),
-  apeMaterno: z.string().trim(),
-  direccion: z.string().trim(),
-  email: z
-    .string()
-    .email({ message: 'Por favor, introduzca un correo electrónico válido.' })
-    .trim(),
-  telefono: phoneValidateZod,
-  password: z
-    .string()
-    .min(8, { message: 'Tener al menos 8 caracteres de longitud' })
-    .regex(/[a-zA-Z]/, { message: 'Debe contener al menos una letra.' })
-    .regex(/[0-9]/, { message: 'Debe contener al menos un numero.' })
-    .regex(/[^a-zA-Z0-9]/, {
-      message: 'Debe de contener al menos un caracter especial.',
-    })
-    .trim(),
-})
+export const SinginFormSchema = z
+  .object({
+    nombre: z.string().trim(),
+    apePaterno: z.string().trim(),
+    apeMaterno: z.string().trim(),
+    direccion: z.string().trim(),
+    email: z
+      .string()
+      .email({ message: 'Por favor, introduzca un correo electrónico válido.' })
+      .trim(),
+    telefono: phoneValidateZod,
+    password: z
+      .string()
+      .min(8, { message: 'Tener al menos 8 caracteres de longitud' })
+      // .regex(/[a-zA-Z]/, { message: 'Debe contener al menos una letra.' })
+      // .regex(/[0-9]/, { message: 'Debe contener al menos un numero.' })
+      // .regex(/[^a-zA-Z0-9]/, {
+      //   message: 'Debe de contener al menos un caracter especial.',
+      // })
+      .trim(),
+    confirmPassword: z.string(),
+  })
+  .refine(data => data.password === data.confirmPassword, {
+    message: 'Las contraseñas no coinciden',
+    path: ['confirmPassword'],
+  })
 
 export type SignupFormState = {
   errors?: {
