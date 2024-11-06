@@ -4,6 +4,11 @@ import bcrypt from 'bcryptjs'
 import NextAuth from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import { ZodError } from 'zod'
+import pages from './config/pages'
+
+export const config = {
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+}
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -129,12 +134,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   session: {
     strategy: 'jwt',
   },
-  pages: {
-    signIn: '/login',
-    newUser: '/registro',
-    signOut: '/logout',
-    error: '/error', // Add this line to use the custom error page
-  },
+  pages: pages,
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
