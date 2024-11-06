@@ -6,6 +6,7 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import logo from '@public/logo.svg'
 import { LogOut, ShoppingCart, User } from 'lucide-react'
+import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '../ui/button'
@@ -19,6 +20,8 @@ import {
 } from '../ui/dropdown-menu'
 
 const Navbar = () => {
+  const { data: session } = useSession()
+
   const cantidad = useStore(useCartStore, state => state.productos)
 
   return (
@@ -42,7 +45,7 @@ const Navbar = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost">
-                  Hola, Jorge
+                  Hola, {session?.user?.name}
                   <FontAwesomeIcon icon={faChevronDown} />
                 </Button>
               </DropdownMenuTrigger>
