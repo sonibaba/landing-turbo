@@ -7,6 +7,8 @@ import {
   SignupFormState,
   SinginFormSchema,
 } from '@/lib/definitions'
+import { prisma } from '@/prisma'
+import { genSaltSync, hashSync } from 'bcryptjs'
 import { redirect } from 'next/navigation'
 import { setCookie } from './cookie-handler'
 
@@ -70,53 +72,73 @@ const login = async (
   redirect('/dashboard')
 }
 
-const registerClient = async (
-  state: SigninFormState | undefined,
-  { get }: FormData
-): Promise<{
-  errors?: {
-    nombre?: string[]
-    apePaterno?: string[]
-    apeMaterno?: string[]
-    email?: string[]
-    telefono?: string[]
-    direccion?: string[]
-    password?: string[]
-    response?: string
-  }
-  success?: boolean
-}> => {
+const registerClient = async (state: SigninFormState | undefined, form: FormData) => {
+  console.log(form)
+
   const validatedFields = SinginFormSchema.safeParse({
-    usuario: get('email'),
-    nombre: get('nombre'),
-    apePaterno: get('apePaterno'),
-    apeMaterno: get('apeMaterno'),
-    direccion: get('direccion'),
-    email: get('email'),
-    telefono: get('telefono'),
-    password: get('password'),
+    usuario: form.get('email'),
+    nombre: form.get('names'),
+    apePaterno: form.get('fatherLastName'),
+    apeMaterno: form.get('motherLastName'),
+    direccion: form.get('address'),
+    email: form.get('email'),
+    telefono: form.get('phone'),
+    password: form.get('password'),
+    confirmPassword: form.get('confirmPassword'),
   })
 
   if (!validatedFields.success) {
+    console.log(validatedFields.error.flatten().fieldErrors)
     return {
       errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Falló la validación del formulario.',
     }
   }
 
-  const response = await fetchResponse('clientes', 'POST', {
-    usuario: get('email'),
-    password: get('password'),
-  })
-  if (!response) {
-    return {
-      errors: {
-        response: 'Ocurrio un error al crear el cliente',
+  const saltRound = await genSaltSync()
+
+  const hashedPassword = await hashSync(validatedFields.data.password, saltRound)
+
+  try {
+    const usuario = await prisma.clientes.create({
+      data: {
+        email: validatedFields.data.email,
+        nombre: validatedFields.data.nombre,
+        apePaterno: validatedFields.data.apePaterno,
+        apeMaterno: validatedFields.data.apeMaterno,
+        telefono: form.get('phone')?.toString() ?? '',
+        password: hashedPassword,
+        direcciones: {
+          create: {
+            direccion: validatedFields.data.direccion,
+          },
+        },
       },
+    })
+    console.log(usuario)
+    return { success: true, message: 'Usuario registrado exitosamente.' }
+  } catch (error) {
+    console.log(error)
+    if (error.code === 'P2002' && error.meta?.target?.includes('email')) {
+      return { message: 'Este correo electrónico ya está registrado.' }
     }
+    return { message: 'Ocurrió un error al registrar el usuario.' }
   }
-  return {
-    success: true,
-  }
+
+  // const response = await fetchResponse('clientes', 'POST', {
+  //   usuario: get('email'),
+  //   password: get('password'),
+  // })
+  // if (!response) {
+  //   return {
+  //     errors: {
+  //       response: 'Ocurrio un error al crear el cliente',
+  //     },
+  //   }
+  // }
+  // return {
+  //   success: true,
+  // }
 }
 
 export { login, registerClient }
