@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
     CLOUDINARY_CLOUD_NAME: 'dt5bkke6v',
     CLOUDINARY_URL: 'cloudinary://API_KEY:API_SECRET@dt5bkke6v',
   },
+  distDir: 'out',
   // i18n: {
   //   locales: ['es-MX'],
   //   defaultLocale: 'es-MX',
