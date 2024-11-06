@@ -1,213 +1,130 @@
 'use client'
 
-import { login } from '@/app/actions/login'
-import FormError from '@/components/shared/FormError'
-import Spinner from '@/components/shared/loading'
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Link from 'next/link'
-import { useActionState, useState } from 'react'
-function Login() {
-  const [showPassword, setShowPassword] = useState(false)
+import { Eye, EyeOff, Loader2, Mail } from 'lucide-react'
+import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import { FormEvent, useState } from 'react'
 
-  const [state, action, isPending] = useActionState(login, undefined)
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Separator } from '@/components/ui/separator'
+import { useToast } from '@/hooks/use-toast'
+
+export default function LoginPage() {
+  const [isLoading, setIsLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const { toast } = useToast()
+  const router = useRouter()
+
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setIsLoading(true)
+
+    const formData = new FormData(event.currentTarget)
+    const email = formData.get('email') as string
+    const password = formData.get('password') as string
+
+    try {
+      const result = await signIn('credentials', {
+        redirect: false,
+        email,
+        password,
+      })
+
+      if (result?.error) {
+        if (result.code == 'credentials') {
+          toast({
+            title: 'Error',
+            description: 'Usuario y/o contraseña incorrectas',
+            variant: 'destructive',
+          })
+        } else {
+          toast({
+            title: 'Error',
+            description: result.error,
+            variant: 'destructive',
+          })
+        }
+      } else {
+        router.replace('/dashboard')
+      }
+    } catch (error) {
+      console.log(error)
+      toast({
+        title: 'Error',
+        description: 'Se produjo un error inesperado',
+        variant: 'destructive',
+      })
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   return (
-    <>
-      {isPending && <Spinner size="lg" className="text-purple-600" />}
-      <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-        {state?.errors?.response && <FormError message={state.errors.response} />}
-
-        <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Iniciar sesión en tu cuenta
-          </h2>
-        </div>
-
-        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-white py-8 px-4 sm:rounded-lg sm:px-10">
-            <form className="space-y-6" action={action}>
-              <div className="mx-4">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                  Correo electrónico
-                </label>
-                <div className="mt-1">
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    required
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
-                  />
-                </div>
-              </div>
-              {state?.errors?.usuario && (
-                <FormError
-                  errors={state.errors.usuario}
-                  title="El correo electronico debe de contener:"
-                />
-              )}
-
-              <div className="mx-4">
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                  Contraseña
-                </label>
-                <div className="mt-1 relative">
-                  <input
-                    id="password"
-                    name="password"
-                    type={showPassword ? 'text' : 'password'}
-                    autoComplete="current-password"
-                    required
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    title="Ver contraseña"
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
-                  >
-                    <FontAwesomeIcon
-                      icon={showPassword ? faEyeSlash : faEye}
-                      className="h-5 w-5 text-gray-400"
-                    />
-                  </button>
-                </div>
-                {state?.errors?.password && (
-                  <FormError errors={state.errors.password} title="La contraseña debe de tener:" />
-                )}
-              </div>
-              <div className="mx-4 flex items-center justify-between">
-                {/* <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
-                />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-                  Recordarme
-                </label>
-              </div> */}
-
-                <div className="text-sm">
-                  <Link
-                    href="/reset-password"
-                    className="font-medium text-[#D14817] hover:text-primary-dark"
-                  >
-                    ¿Olvidaste tu contraseña?
-                  </Link>
-                </div>
-              </div>
-
-              <div className="mx-4">
-                <button
-                  type="submit"
-                  disabled={isPending}
-                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#D14817] hover:bg-[#B13913] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#D14817]"
-                >
-                  Iniciar sesión
-                </button>
-              </div>
-            </form>
-
-            <div className="mt-6">
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-300"></div>
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-gray-500">O</span>
-                </div>
-              </div>
-
-              <div className="mt-6">
-                <Link
-                  href="/registro"
-                  className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 cursor-pointer transition duration-150 ease-in-out"
-                >
-                  Crear cuenta
-                </Link>
-              </div>
-            </div>
-
-            {/* <div className="mt-6 mx-4">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">O continúa con</span>
-              </div>
-            </div>
-
-            <div className="mt-6 grid grid-cols-3 gap-3">
-              <div>
-                <a
-                  href="#"
-                  className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                >
-                  <span className="sr-only">Sign in with Facebook</span>
-                  <svg
-                    className="w-5 h-5"
-                    aria-hidden="true"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M20 10c0-5.523-4.477-10-10-10S0 4.477 0 10c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V10h2.54V7.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V10h2.773l-.443 2.89h-2.33v6.988C16.343 19.128 20 14.991 20 10z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </a>
-              </div>
-
-              <div>
-                <a
-                  href="#"
-                  className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                >
-                  <span className="sr-only">Sign in with Twitter</span>
-                  <svg
-                    className="w-5 h-5"
-                    aria-hidden="true"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84" />
-                  </svg>
-                </a>
-              </div>
-
-              <div>
-                <a
-                  href="#"
-                  className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                >
-                  <span className="sr-only">Sign in with GitHub</span>
-                  <svg
-                    className="w-5 h-5"
-                    aria-hidden="true"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </a>
-              </div>
-            </div>
-          </div> */}
+    <div className="mx-auto max-w-sm space-y-6 p-4">
+      <div className="space-y-2 text-center">
+        <h1 className="text-2xl font-bold">Iniciar sesión en tu cuenta</h1>
+      </div>
+      <form onSubmit={onSubmit} className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="email">Correo electrónico</Label>
+          <div className="relative">
+            <Input id="email" name="email" placeholder="" type="email" required />
+            <Mail className="absolute right-3 top-2.5 h-5 w-5 text-muted-foreground" />
           </div>
         </div>
+        <div className="space-y-2">
+          <Label htmlFor="password">Contraseña</Label>
+          <div className="relative">
+            <Input
+              id="password"
+              name="password"
+              type={showPassword ? 'text' : 'password'}
+              placeholder=""
+              required
+            />
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="absolute right-2 top-2 h-5 w-5 p-0 text-muted-foreground hover:bg-transparent"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+              <span className="sr-only">
+                {showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+              </span>
+            </Button>
+          </div>
+        </div>
+        <Button
+          type="button"
+          variant="link"
+          className="px-0 text-sm font-normal text-muted-foreground"
+        >
+          ¿Olvidaste tu contraseña?
+        </Button>
+        <Button
+          type="submit"
+          className="w-full bg-[#D84315] hover:bg-[#BF360C] text-white"
+          disabled={isLoading}
+        >
+          {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+          Iniciar sesión
+        </Button>
+      </form>
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <Separator />
+        </div>
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="bg-background px-2 text-muted-foreground">O</span>
+        </div>
       </div>
-    </>
+      <Button variant="outline" className="w-full" onClick={() => router.push('/registro')}>
+        Crear cuenta
+      </Button>
+    </div>
   )
 }
-
-export default Login
