@@ -1,22 +1,26 @@
 'use server'
 
 import { IProducto, IProductos } from '@/model/productos'
-import { serverAction } from './cookie-handler'
+import { prisma } from '@/prisma'
 
 const getProductos = async (): Promise<{
   error?: string
   data: IProducto
 }> => {
-  const { data, success, error } = await serverAction('productos?estatus=true', 'GET')
+  const productos = await prisma.productos.findMany()
 
-  if (!success) {
-    return {
-      error,
-      data: { combos: [], complementos: [], pizzas: [] },
-    }
-  }
+  // console.log(productos)
 
-  const obj = (data as unknown as Array<IProductos>).reduce((acc, producto) => {
+  // const { data, success, error } = await serverAction('productos?estatus=true', 'GET')
+
+  // if (!success) {
+  //   return {
+  //     error,
+  //     data: { combos: [], complementos: [], pizzas: [] },
+  //   }
+  // }
+
+  const obj = (productos as Array<IProductos>).reduce((acc, producto) => {
     if (acc[producto.categoria]) {
       acc[producto.categoria].push(producto)
     } else {
@@ -26,11 +30,10 @@ const getProductos = async (): Promise<{
   }, {} as IProducto)
 
   return {
-    error,
     data: {
-      combos: obj.combos ?? [],
-      complementos: obj.complementos ?? [],
-      pizzas: obj.pizzas ?? [],
+      combos: obj?.combos ?? [],
+      complementos: obj?.complementos ?? [],
+      pizzas: obj?.pizzas ?? [],
     },
   }
 }
