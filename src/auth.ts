@@ -147,3 +147,5 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   secret: process.env.AUTH_SECRET || 'kIGN7Ezh1b4XYVNUi8l8RmGSzVNt0yO6R3o2+APm07Q=',
 })
+
+console.log(process.env.AUTH_SECRET || 'kIGN7Ezh1b4XYVNUi8l8RmGSzVNt0yO6R3o2+APm07Q=')
