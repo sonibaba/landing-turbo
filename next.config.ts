@@ -42,6 +42,15 @@ const nextConfig: NextConfig = {
     config.externals = [...config.externals, 'bcrypt']
     return config
   },
+  async redirects() {
+    return [
+      {
+        source: '/signout',
+        destination: '/api/auth/signout',
+        permanent: true,
+      },
+    ]
+  },
 }
 
 export default nextConfig
