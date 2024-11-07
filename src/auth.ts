@@ -17,6 +17,12 @@ const getSecret = (): string => {
   return secret
 }
 
+const getBaseUrl = (): string => {
+  if (typeof window !== 'undefined') return '' // En el navegador, URL relativa
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`
+  return process.env.NEXTAUTH_URL ?? 'turbo-pizza-dusky.vercel.app' // URL local
+}
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -157,6 +163,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.id = token.id as string
       }
       return session
+    },
+    async redirect({ url }) {
+      const baseUrlWithProtocol = getBaseUrl()
+      if (url.startsWith(baseUrlWithProtocol)) return url
+      return baseUrlWithProtocol
     },
   },
   secret: getSecret(),
