@@ -4,7 +4,6 @@ import bcrypt from 'bcryptjs'
 import NextAuth from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import { ZodError } from 'zod'
-import pages from './config/pages'
 
 const getSecret = (): string => {
   const secret = process.env.NEXTAUTH_SECRET
@@ -20,7 +19,7 @@ const getSecret = (): string => {
 const getBaseUrl = (): string => {
   if (typeof window !== 'undefined') return '' // En el navegador, URL relativa
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`
-  return process.env.NEXTAUTH_URL ?? 'turbo-pizza-dusky.vercel.app' // URL local
+  return process.env.NEXTAUTH_URL ?? 'http://localhost:3000' // URL local
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
@@ -147,7 +146,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   session: {
     strategy: 'jwt',
   },
-  pages: pages,
   callbacks: {
     authorized: ({ auth }) => {
       return !!auth
@@ -166,6 +164,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
     async redirect({ url }) {
       const baseUrlWithProtocol = getBaseUrl()
+      console.log({ baseUrlWithProtocol })
       if (url.startsWith(baseUrlWithProtocol)) return url
       return baseUrlWithProtocol
     },
@@ -173,4 +172,4 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   secret: getSecret(),
 })
 
-console.log(process.env.AUTH_SECRET || 'kIGN7Ezh1b4XYVNUi8l8RmGSzVNt0yO6R3o2+APm07Q=')
+console.log(getBaseUrl(), process.env.AUTH_SECRET || 'kIGN7Ezh1b4XYVNUi8l8RmGSzVNt0yO6R3o2+APm07Q=')
