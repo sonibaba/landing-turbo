@@ -145,4 +145,5 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session
     },
   },
+  secret: 'kIGN7Ezh1b4XYVNUi8l8RmGSzVNt0yO6R3o2+APm07Q=',
 })
