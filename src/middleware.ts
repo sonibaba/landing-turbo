@@ -7,7 +7,7 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico, sitemap.xml, robots.txt (metadata files)
      */
-    '/((?!api|auth/providers|auth/signout|auth/csrf|auth/session|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
+    '/((?!api|api/auth/providers|api/auth/signout|api/auth/csrf|api/auth/session|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
   ],
 }
 
