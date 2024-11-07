@@ -6,6 +6,17 @@ import Credentials from 'next-auth/providers/credentials'
 import { ZodError } from 'zod'
 import pages from './config/pages'
 
+const getSecret = (): string => {
+  const secret = process.env.NEXTAUTH_SECRET
+  if (!secret) {
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error('Please define the NEXTAUTH_SECRET environment variable')
+    }
+    return 'kIGN7Ezh1b4XYVNUi8l8RmGSzVNt0yO6R3o2+APm07Q='
+  }
+  return secret
+}
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -145,7 +156,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session
     },
   },
-  secret: process.env.AUTH_SECRET || 'kIGN7Ezh1b4XYVNUi8l8RmGSzVNt0yO6R3o2+APm07Q=',
+  secret: getSecret(),
 })
 
 console.log(process.env.AUTH_SECRET || 'kIGN7Ezh1b4XYVNUi8l8RmGSzVNt0yO6R3o2+APm07Q=')
