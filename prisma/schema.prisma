@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "mongodb"
-  url      = env("DATABASE_URL")
+  url      = "mongodb+srv://turbo:bP1Rl3H3DWmhsknv@turbo.tqmjj.mongodb.net/turbopizza?retryWrites=true&w=majority&maxConnecting=100"
 }
 
 model clientes {
