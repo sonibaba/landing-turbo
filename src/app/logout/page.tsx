@@ -10,8 +10,7 @@ export default function LogoutPage() {
 
   useEffect(() => {
     const performLogout = async () => {
-      await signOut({ redirect: false })
-      router.push('/login')
+      await signOut({ redirect: false, redirectTo: '/login' })
     }
 
     performLogout()
