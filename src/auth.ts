@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs'
 import NextAuth from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import { ZodError } from 'zod'
+import pages from './config/pages'
 
 const getSecret = (): string => {
   const secret = process.env.NEXTAUTH_SECRET
@@ -146,6 +147,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   session: {
     strategy: 'jwt',
   },
+  pages: pages,
   callbacks: {
     authorized: ({ auth }) => {
       return !!auth
