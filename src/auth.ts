@@ -6,19 +6,19 @@ import Credentials from 'next-auth/providers/credentials'
 import { ZodError } from 'zod'
 import pages from './config/pages'
 
-const getSecret = (): string => {
-  // const secret = process.env.NEXTAUTH_SECRET
-  const secret = process.env.AUTH_SECRET
+// const getSecret = (): string => {
+//   // const secret = process.env.NEXTAUTH_SECRET
+//   const secret = process.env.AUTH_SECRET
 
-  if (!secret) {
-    if (process.env.NODE_ENV === 'production') {
-      throw new Error('Please define the NEXTAUTH_SECRET environment variable')
-    }
-    return 'kIGN7Ezh1b4XYVNUi8l8RmGSzVNt0yO6R3o2+APm07Q='
-  }
+//   if (!secret) {
+//     if (process.env.NODE_ENV === 'production') {
+//       throw new Error('Please define the NEXTAUTH_SECRET environment variable')
+//     }
+//     return 'kIGN7Ezh1b4XYVNUi8l8RmGSzVNt0yO6R3o2+APm07Q='
+//   }
 
-  return secret
-}
+//   return secret
+// }
 
 const getBaseUrl = (): string => {
   if (typeof window !== 'undefined') return '' // En el navegador, URL relativa
