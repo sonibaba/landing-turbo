@@ -28,7 +28,8 @@ const getBaseUrl = (): string => {
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   // secret: getSecret(),
-  secret: process.env.AUTH_SECRET,
+  // secret: process.env.AUTH_SECRET,
+  secret: "Cualquier cosa",
   adapter: PrismaAdapter(prisma),
   providers: [
     Credentials({
