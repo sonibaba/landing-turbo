@@ -6,16 +6,19 @@ import Credentials from 'next-auth/providers/credentials'
 import { ZodError } from 'zod'
 import pages from './config/pages'
 
-const getSecret = (): string => {
-  const secret = process.env.NEXTAUTH_SECRET
-  if (!secret) {
-    if (process.env.NODE_ENV === 'production') {
-      throw new Error('Please define the NEXTAUTH_SECRET environment variable')
-    }
-    return 'kIGN7Ezh1b4XYVNUi8l8RmGSzVNt0yO6R3o2+APm07Q='
-  }
-  return secret
-}
+// const getSecret = (): string => {
+//   // const secret = process.env.NEXTAUTH_SECRET
+//   const secret = process.env.AUTH_SECRET
+
+//   if (!secret) {
+//     if (process.env.NODE_ENV === 'production') {
+//       throw new Error('Please define the NEXTAUTH_SECRET environment variable')
+//     }
+//     return 'kIGN7Ezh1b4XYVNUi8l8RmGSzVNt0yO6R3o2+APm07Q='
+//   }
+
+//   return secret
+// }
 
 const getBaseUrl = (): string => {
   if (typeof window !== 'undefined') return '' // En el navegador, URL relativa
@@ -24,6 +27,8 @@ const getBaseUrl = (): string => {
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  // secret: getSecret(),
+  secret: process.env.AUTH_SECRET,
   adapter: PrismaAdapter(prisma),
   providers: [
     Credentials({
@@ -166,12 +171,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
     async redirect({ url }) {
       const baseUrlWithProtocol = getBaseUrl()
-      console.log({ baseUrlWithProtocol })
+      // console.log({ baseUrlWithProtocol })
       if (url.startsWith(baseUrlWithProtocol)) return url
       return baseUrlWithProtocol
     },
   },
-  secret: getSecret(),
 })
 
-console.log(getBaseUrl(), process.env.AUTH_SECRET || 'kIGN7Ezh1b4XYVNUi8l8RmGSzVNt0yO6R3o2+APm07Q=')
+// console.log(getBaseUrl(), process.env.AUTH_SECRET || 'kIGN7Ezh1b4XYVNUi8l8RmGSzVNt0yO6R3o2+APm07Q=')
